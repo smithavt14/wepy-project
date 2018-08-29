@@ -50,7 +50,7 @@
       num: {
         type: [Number, String],
         coerce: function (v) {
-          return +v
+          return + v
         },
         default: 50
       }

@@ -1,1 +1,68 @@
-activitycard.wpy
+<template lang="wxml">
+  <view class="activity-container">
+    <image class="sm-avatar" src="{{ item.activity_image_url }}" background-size="cover">
+    <view class="activity-information">
+      <view class="activity-information-venue">
+        <text>{{item.venue_name}}</text>
+      </view>
+      <view class="activity-information-name">
+        <text>{{item.title}}</text>
+      </view>
+      <view class="activity-information-time">
+        <text>{{item.start_time}}</text>
+      </view>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Activitycard extends wepy.component {
+  components = {};
+
+  data = {};
+  methods = {};
+
+  events = {};
+  // Other properties
+}
+</script>
+
+<style lang="less">
+.activity-container {
+  width: 100%;
+  height: 100px;
+  border: 1px solid black;
+  display: flex;
+  align-items: center;
+  border-radius: 5px;
+}
+
+.sm-avatar {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  margin:10px;
+}
+
+.activity-information {
+}
+
+.activity-information-venue {
+  color: grey;
+  font-size: 12px;
+
+
+}
+
+.activity-information-name {
+  color: black;
+
+}
+
+.activity-information-time {
+
+}
+
+/** less **/
+</style>

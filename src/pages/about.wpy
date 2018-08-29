@@ -1,15 +1,18 @@
 <script>
 import wepy from 'wepy'
 import Counter from '../components/counter'
+import Activitycard from '../components/activitycard'
 
 export default class About extends wepy.page {
   config = {}
-  components = {counter1: Counter}
+  components = {
+    counter1: Counter,
+    card: Activitycard
+  }
 
   data = {
     name: 'Alex Smith',
     availabilities: [],
-    an_array: ['one', 'two', 'three']
   }
   methods = {
     user_login () {
@@ -51,13 +54,6 @@ export default class About extends wepy.page {
       })
     },
 
-    set_availabilities () {
-      var self = this
-      self.availablities = ['one', 'two', 'three']
-      self.$apply()
-      console.log(self.availablities)
-    },
-
     change_index () {
       wepy.navigateTo({
         url: 'index'
@@ -83,7 +79,6 @@ export default class About extends wepy.page {
           key: 'availabilities',
           success: function(res) {
             console.log(res.data)
-            console.log('^^Local data in availabilities')
           }
         })
       }
@@ -99,12 +94,12 @@ export default class About extends wepy.page {
 
 <template lang="wxml">
   <button type="default" @tap="get_data">Get Data</button>
-  <button type="warn" @tap="set_availabilities">Set Test Data</button>
-  <repeat for="{{availabilities}}" key="activity.id" item="activity">
-    <view>
-      {{activity.id}}: {{activity.title}}
-    </view>
-  </repeat>
+  <view class="card-container">
+    <repeat for="{{availabilities}}" key="activity.id" item="activity">
+      <card :item="activity"></card>
+    </repeat>
+  </view>
+
   <navigator class="btm-btn">
     <button type="warn" @tap="user_login">Login</button>
     <button type="primary" @tap="change_index">Index</button>
@@ -119,6 +114,9 @@ export default class About extends wepy.page {
   text-align: center;
   }
 
-
+  .card-container {
+    height: auto;
+    overflow: auto;
+  }
 /** less **/
 </style>
