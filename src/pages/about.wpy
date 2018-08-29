@@ -3,6 +3,9 @@ import wepy from 'wepy'
 import Counter from '../components/counter'
 import Activitycard from '../components/activitycard'
 
+var strftime = require('strftime')
+var strftimeZ = strftime.timezone(0)
+
 export default class About extends wepy.page {
   config = {}
   components = {
@@ -12,7 +15,7 @@ export default class About extends wepy.page {
 
   data = {
     name: 'Alex Smith',
-    availabilities: [],
+    availabilities: []
   }
   methods = {
     user_login () {
@@ -79,12 +82,14 @@ export default class About extends wepy.page {
           key: 'availabilities',
           success: function(res) {
             console.log(res.data)
+            console.log(strftime('%B %d, %Y %H:%M:%S'))
+            console.log(res.data[0].start_time)
+            console.log(strftimeZ('%B %d, %Y %H:%M:%S', new Date(res.data[0].start_time)))
           }
         })
       }
     })
   }
-
   onLoad() {
     this.getData()
   }
@@ -93,17 +98,15 @@ export default class About extends wepy.page {
 </script>
 
 <template lang="wxml">
-  <button type="default" @tap="get_data">Get Data</button>
-  <view class="card-container">
-    <repeat for="{{availabilities}}" key="activity.id" item="activity">
-      <card :item="activity"></card>
-    </repeat>
+  <view class="about-wrapper">
+    <button type="warn" @tap="get_data">Get Data</button>
+    <view class="card-container">
+      <repeat for="{{availabilities}}" key="activity.id" item="activity">
+        <card :item="activity"></card>
+      </repeat>
+    </view>
   </view>
-
-  <navigator class="btm-btn">
-    <button type="warn" @tap="user_login">Login</button>
-    <button type="primary" @tap="change_index">Index</button>
-  </navigator>
+  <button type="default" @tap="change_index" class="btm-btn">Index</button>
 </template>
 
 <style lang="less">
@@ -116,6 +119,12 @@ export default class About extends wepy.page {
 
   .card-container {
     height: auto;
+    overflow: auto;
+  }
+
+  .about-wrapper {
+    position: relative;
+    max-height: 100vh;
     overflow: auto;
   }
 /** less **/
