@@ -1,0 +1,120 @@
+<script>
+import wepy from 'wepy'
+import Counter from '../components/counter'
+
+export default class About extends wepy.page {
+  config = {}
+  components = {counter1: Counter}
+
+  data = {
+    name: 'Alex Smith',
+    availabilities: []
+  }
+  methods = {
+    user_login () {
+      var self = this
+      wepy.login({
+        success: function (data) {
+          console.log(data)
+          wepy.getUserInfo({
+            success: function (userinfo) {
+              self.setData({
+                userInfo: userinfo
+              })
+              console.log(userinfo)
+            }
+          })
+        }
+      })
+    },
+
+    get_data () {
+      wepy.request({
+        url: 'https://api.moveshanghai.com/api/v4/availabilities?page=1&per=20&day=Wednesday',
+        header: {
+          'content-type': 'application/json',
+          'X-Auth-Token': 'eyJhbGciOiJIUzI1NiJ9.eyJjdXN0b21lciI6Ijg2MTU2NzczMzQ0OTUiLCJleHAiOjE1NDU1MTI1MDB9.H0aT6pou5oPu7Ft2vgE8YvdP2_fHPk_jNtV1XA5mKCs'
+        },
+        success: function(res) {
+          console.log(res.data.data.availabilities)
+          console.log('^^API information')
+          wepy.setStorage({
+            key: 'availabilities',
+            data: res.data.data.availabilities
+          })
+          wepy.getStorage({
+            key: 'availabilities',
+            success: function(res) {
+              console.log(res.data)
+              console.log('^^Local data in availabilities')
+            }
+          })
+        }
+      })
+    },
+
+    change_index () {
+      wepy.navigateTo({
+        url: 'index'
+      })
+    }
+  }
+
+  events = {}
+
+// onLoad Methods //
+  getData () {
+    wepy.request({
+      url: 'https://api.moveshanghai.com/api/v4/availabilities?page=1&per=20&day=Wednesday',
+      header: {
+        'content-type': 'application/json',
+        'X-Auth-Token': 'eyJhbGciOiJIUzI1NiJ9.eyJjdXN0b21lciI6Ijg2MTU2NzczMzQ0OTUiLCJleHAiOjE1NDU1MTI1MDB9.H0aT6pou5oPu7Ft2vgE8YvdP2_fHPk_jNtV1XA5mKCs'
+      },
+      success: function(res) {
+        console.log(res.data.data.availabilities)
+        wepy.setStorage({
+          key: 'availabilities',
+          data: res.data.data.availabilities
+        })
+        wepy.getStorage({
+          key: 'availabilities',
+          success: function(res) {
+            console.log(res.data)
+          }
+        })
+      }
+    })
+  }
+
+  onLoad() {
+    this.getData()
+  }
+  // Other properties
+}
+</script>
+
+<template lang="wxml">
+  <button type="default" @tap="get_data">Get Data</button>
+  <navigator>
+    <view wepy:for="availabilities">
+      <text>{{availability.title}}</text>
+    </view>
+
+  </navigator>
+    <navigator class="btm-btn">
+      <button type="warn" @tap="user_login">Login</button>
+      <button type="primary" @tap="change_index">Index</button>
+    </navigator>
+</template>
+
+<style lang="less">
+  .btm-btn {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  }
+
+
+/** less **/
+</style>

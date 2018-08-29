@@ -21,6 +21,7 @@
       <image class="userinfo-avatar" src="{{ userInfo.avatarUrl }}" background-size="cover"/>
       <view class="userinfo-nickname">{{ userInfo.nickName }}</view>
     </view>
+    <button type='primary' @tap="change_about">About</button>
 
     <panel>
       <view class="title" slot="title">测试数据绑定</view>
@@ -182,6 +183,12 @@
     }
 
     methods = {
+      change_about () {
+        wepy.navigateTo({
+          url: 'about'
+        })
+      },
+
       plus () {
         this.mynum++
       },
