@@ -1,12 +1,17 @@
 <template lang="wxml">
   <view class="footer-container">
-    <view class="footer-container-activities">
-      <text>Workouts</text>
+    <view class="footer-container-nav">
+      <image src="../images/activity_icon.svg" alt="" class="footer-container-nav-icon"></image>
+      <view class="footer-container-nav-text">
+        <text>Workouts</text>
+      </view>
     </view>
-    <view class="footer-container-venues">
+    <view class="footer-container-nav">
+      <image src="" alt="" class="footer-container-nav-icon"></image>
       <text>Venues</text>
     </view>
-    <view class="footer-container-user">
+    <view class="footer-container-nav">
+      <image src="" alt="" class="footer-container-nav-icon"></image>
       <text>User</text>
     </view>
   </view>
@@ -15,7 +20,9 @@
 <script>
 import wepy from 'wepy'
 export default class Footer extends wepy.component {
-  components = {}
+  components = {
+
+  }
 
   data = {}
   methods = {}
@@ -27,14 +34,36 @@ export default class Footer extends wepy.component {
 
 <style lang="less">
 .footer-container {
-  height: 100px;
+  height: 70px;
+  background-color: white;
+  box-shadow: 0px -1px 4px rgba(0,0,0,0.25);
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: space-around;
+  position: absolute;
+  bottom: 0;
 }
 
-.footer-container-activities {
-
+.footer-container-nav {
+  height: 100%;
+  width: 33.33%;
+  color: #C4C4C4;
+  display: block;
+  align-items: center;
+  text-align: center;
 }
+
+.footer-container-nav-icon {
+  background-image: cover;
+  height: 50px;
+  width: 50px;
+}
+
+.footer-container-nav-text {
+  margin-bottom: 10px;
+}
+
+
 /** less **/
 </style>
