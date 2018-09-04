@@ -1,0 +1,40 @@
+<template lang="wxml">
+  <view class="footer-container">
+    <view class="footer-container-activities">
+      <text>Workouts</text>
+    </view>
+    <view class="footer-container-venues">
+      <text>Venues</text>
+    </view>
+    <view class="footer-container-user">
+      <text>User</text>
+    </view>
+  </view>
+</template>
+
+<script>
+import wepy from 'wepy'
+export default class Footer extends wepy.component {
+  components = {}
+
+  data = {}
+  methods = {}
+
+  events = {}
+  // Other properties
+}
+</script>
+
+<style lang="less">
+.footer-container {
+  height: 100px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.footer-container-activities {
+
+}
+/** less **/
+</style>
