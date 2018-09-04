@@ -2,6 +2,7 @@
 import wepy from 'wepy'
 import Counter from '../components/counter'
 import Activitycard from '../components/activitycard'
+import Footer from '../components/footer'
 
 var strftime = require('strftime')
 var strftimeZ = strftime.timezone(0)
@@ -10,7 +11,8 @@ export default class About extends wepy.page {
   config = {}
   components = {
     counter1: Counter,
-    card: Activitycard
+    card: Activitycard,
+    footer: Footer
   }
 
   data = {
@@ -106,7 +108,7 @@ export default class About extends wepy.page {
       </repeat>
     </view>
   </view>
-  <button type="default" @tap="change_index" class="btm-btn">Index</button>
+  <footer></footer>
 </template>
 
 <style lang="less">
