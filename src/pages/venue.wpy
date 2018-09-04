@@ -1,0 +1,136 @@
+<script>
+import wepy from 'wepy';
+import Counter from '../components/counter';
+
+export default class Venue extends wepy.page {
+    config = {};
+    components = {counter1: Counter};
+
+    data = {
+      places: []
+    };
+    methods = {};
+
+    events = {};
+
+    onLoad (options) {
+      var self = this;
+      this.setData({})
+
+      wepy.request({
+        url: 'https://api.moveshanghai.com/api/v4/venues?page=1&per=200',
+        header: {
+          'content-type': 'application/json',
+          'X-Auth-Token': 'eyJhbGciOiJIUzI1NiJ9.eyJjdXN0b21lciI6Ijg2MTU2NzczMzQ0OTUiLCJleHAiOjE1NDU1MTI1MDB9.H0aT6pou5oPu7Ft2vgE8YvdP2_fHPk_jNtV1XA5mKCs'
+        },
+        success: function(res) {
+          console.log(self.places)
+          self.places = res.data.data.venues
+          console.log(res.data.data.venues)
+          console.log(self.places)
+          self.$apply()
+        }
+      })
+    }
+}
+</script>
+
+<template lang="wxml">
+ <view class="weui-search-bar">
+    <view class="weui-search-bar__form">
+        <view class="weui-search-bar__box">
+            <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+            <input type="text" class="weui-search-bar__input" placeholder="" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+            <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+                <icon type="clear" size="14"></icon>
+            </view>
+        </view>
+        <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput"></label>
+    </view>
+    <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+  </view>
+  <view class="headline">
+    <text>场馆</text>
+    <view class="line"></view>
+  </view>
+  <view class="card-container">
+    <repeat for="{{places}}" key="index" index="index" item="place">
+      <view class="venue-card">
+      <image style="width: 80px; height: 70px; border-radius: 4px; padding: 10px;" src="{{place.main_image_url}}"></image>
+      <view class="card-content">
+        <text>{{place.name}}</text>
+        <view class="avl">
+          <text>{{place.venue_classes_count}} AVAILABLE</text>
+        </view>
+      </view>
+      </view>
+    </repeat>
+  </view>
+</template>
+
+
+<style lang="less">
+.headline {
+  text-align: center;
+  margin: 15px auto;
+}
+.weui-search-bar {
+  align-items: center;
+  text-align: center;
+  margin-left: 40px;
+  margin-bottom: 5px;
+}
+.weui-search-bar__form {
+  align-items: center;
+  text-align: left;
+}
+.weui-search-bar__box {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  background-color: #F2F2F2;
+  width: 300px;
+  border-radius: 3px;
+}
+.line {
+  margin: 10px auto;
+  width: 300px;
+  height: 2rpx;
+  background-color: #D8D8D8;
+  }
+.searchbar-result{
+    margin-top: 0;
+    font-size: 14px;
+}
+.searchbar-result:before{
+    display: none;
+}
+.weui-cell{
+    padding: 12px 15px 12px 35px;
+}
+.venue-card {
+  display: flex;
+  height:200rpx;
+  margin:18px auto;
+  text-align:left;
+  align-items:center;
+  box-shadow:1px 1px 1px rgba(0,0,0,0.2);
+  border-radius:5px;
+  width:95%;
+  background-color: #FBFCFC;
+}
+.card-content {
+  width: 200px;
+  padding-left: 10px;
+  font-weight: bolder;
+}
+.avl {
+  width: ;
+  background-color: ;
+  text {
+    font-weight: lighter;
+    font-size: 15px;
+  }
+}
+</style>
